@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <title>HTML Table Header</title>
+   </head>
+<style>
+    style>
+      .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table {margin-left: auto;
+  margin-right: auto;
+}
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+#employeetr:nth-child(even){background-color: ##ff668c;}
+
+#employee tr:hover {background-color: #ddd;}
+.bttn {
+
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+.hidetext { -webkit-text-security: disc;}
+
+
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    $(".del").click(function(){
+        var title = $(this).attr("value");
+      if (confirm('Delete Book : '  + title + '?')) {
+        	var posting = $.get( '/delete', {title} );
+            location.reload();
+      }
+
+    });
+    $(".editable").click(function(){
+        var title = $(this).attr("value");
+      if (confirm('Do you want to update book : '  + title + '?')) {
+        	location.href = '/update?title=' + title
+      }
+
+    });
+});
+</script>
+   <body>
+{% include "menu.html" %}
+   <br/><br/>
+   <table class="styled-table" border = "2",width="30%">
+    <tr>
+        <th>Title </th>
+        <th>Author </th>
+        <th>Pages </th>
+        <th>Language </th>
+        <th>Action </th>
+    </tr>
+       {% for b in books %}
+      <tr>
+            <td>{{b.Title}}</td>
+           <td>{{ b.Author}} </td>
+           <td>{{ b.Pages}}</td>
+           <td>{{ b.language}} </td>
+          <td>
+             <button class="editable" id="update" value="{{b.Title}}"  contenteditable="false">update</button>
+           <button class="del" id="delete" name="id" value="{{b.Title}}"  contenteditable="false">Delete</button>
+            </td>
+      </tr>
+        {% endfor %}
+   </table>
+   </body>
+
+</html>
